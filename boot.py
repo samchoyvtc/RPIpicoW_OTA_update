@@ -20,5 +20,5 @@ if input_pin.value() == 0:
     # Flash the LED 5 times
     flash_led(led_pin, 5)
     ugit.pull_all()
-else:
-    wlan = ugit.wificonnect()
+
+
