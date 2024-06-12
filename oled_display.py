@@ -12,10 +12,5 @@ def hello_world():
 
     oled.text('SSD1306 Ready', 15, 12, 1)
     oled.show()
-    count = 0
-    while True:
-        count_string = str(count)
-        oled.text(count_string, 15, 32, 1)
-        time.sleep(0.5)
-        count += 1
+    
     
