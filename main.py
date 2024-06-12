@@ -20,7 +20,7 @@ i2c_dev = I2C(0,scl=Pin(17),sda=Pin(16),freq=200000)  # start I2C on I2C1 (GPIO 
 oled = SSD1306_I2C(128, 64, i2c_dev) # oled controller
 
 
-oled.text('Hello World', 0, 0, 1)
+oled.text('SSD1306 Ready', 40, 12, 1)
 oled.show()
 
 # Flash the LED 3 times with 0.5 seconds on and 0.5 seconds off
