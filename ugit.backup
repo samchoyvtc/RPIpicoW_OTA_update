@@ -14,7 +14,6 @@ import machine
 import time
 import network
 import ubinascii
-import _thread
 
 import sys
 from machine import Pin,I2C
@@ -169,7 +168,6 @@ def wificonnect(ssid=ssid,password=password):
     print(wlan.ifconfig())
     try:
       mqttconnect()
-      _thread.start_new_thread(MQTT_ugit, ()) 
     except OSError as e:
       machine.reset()
     return wlan
@@ -292,3 +290,4 @@ def backup():
     backup = open('ugit.backup','w')
     backup.write(backup_text)
     backup.close()
+
