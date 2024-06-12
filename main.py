@@ -20,8 +20,8 @@ topic_pub = b'OTA_pub'
 def sub_cb(topic, msg):
   print((topic, msg))
   print("sub_cb")
-  if topic == b'Sam_notification' and msg == b'test':
-    print('ESP received hello message')
+  if topic == b'OTA_notification' and msg == b'OTA_UPDATE':
+    print('MESSAGE Received')
     ugit.pull_all()
     
 
