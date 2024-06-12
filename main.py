@@ -16,6 +16,6 @@ def readme():
 
 while True:
     ugit.ota_mqtt_check(readme())
-    time.sleep(4)
+    time.sleep(1)
     
     
