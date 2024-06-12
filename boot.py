@@ -19,6 +19,7 @@ input_pin = Pin(15, Pin.IN, Pin.PULL_UP)
 
 # Check if the input pin is low
 if input_pin.value() == 0:
+    print("Ready to perform OTA")
     # Flash the LED 5 times
     flash_led(led_pin, 5)
     ugit.pull_all()
