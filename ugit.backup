@@ -145,10 +145,10 @@ def sub_cb(topic, msg):
     pull_all()
     
 
-def ota_mqtt_check():
+def ota_mqtt_check(msg):
     global client
     client.check_msg()
-    client.publish(topic_pub, "OTA Alive")
+    client.publish(topic_pub, msg)
 
 def ota_mqtt_connect_and_subscribe():
     global client, client_id, mqtt_server, topic_sub
