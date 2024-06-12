@@ -1,4 +1,1 @@
-Version number: V7
-
-
-Version Update: 12/6/2024
+Version: V7
