@@ -13,11 +13,12 @@ def flash_led(pin, flashes):
 led_pin = Pin(28, Pin.OUT)
 # Initialize pin 15 as an input pin with a pull-up resistor
 input_pin = Pin(15, Pin.IN, Pin.PULL_UP)
-wlan = ugit.wificonnect()
+
 
 # Check if the input pin is low
 if input_pin.value() == 0:
     # Flash the LED 5 times
     flash_led(led_pin, 5)
     ugit.pull_all()
-
+else:
+    wlan = ugit.wificonnect()
