@@ -1,3 +1,4 @@
+from machine import Pin
 import ugit
 wlan = ugit.wificonnect()
 led_pin  = Pin(28, Pin.OUT)
