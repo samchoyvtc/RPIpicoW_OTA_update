@@ -1,6 +1,7 @@
 import sys
 import time
 from machine import Pin,I2C
+import MQTT
 
 # Add the 'libs' directory to the module search path
 sys.path.append('/Library')
@@ -21,6 +22,5 @@ def hello_world():
         time.sleep(0.01)  # Wait for on_time seconds
 
 
-    
-hello_world()   
+
     

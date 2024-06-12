@@ -1,6 +1,7 @@
 import time
 import ubinascii
 import network
+import ugit
 import sys
 # Add the 'libs' directory to the module search path
 sys.path.append('/Library')
@@ -41,6 +42,8 @@ def sub_cb(topic, msg):
   print("sub_cb")
   if topic == b'Sam_notification' and msg == b'test':
     print('ESP received hello message')
+    ugit.pull_all()
+    
 
 def connect_and_subscribe():
   global client_id, mqtt_server, topic_sub
@@ -55,6 +58,7 @@ def restart_and_reconnect():
   print('Failed to connect to MQTT broker. Reconnecting...')
   time.sleep(10)
   machine.reset()
+
 
 try:
   client = connect_and_subscribe()
@@ -76,4 +80,5 @@ while True:
 
 
     
+
 
