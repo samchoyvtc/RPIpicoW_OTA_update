@@ -1,7 +1,7 @@
 import sys
 import time
 from machine import Pin,I2C
-#import MQTT
+
 
 # Add the 'libs' directory to the module search path
 sys.path.append('/Library')
