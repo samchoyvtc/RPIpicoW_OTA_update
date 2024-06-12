@@ -1,32 +1,18 @@
 import ugit
 import time
 
-def read_readme_to_string():
+
+while True:
     try:
         # Open the README.md file in read mode
         with open('README.md', 'r') as file:
-            # Read the contents of the file and store it in a string
+            # Read the contents of the file
             content = file.read()
-        return content
+            # Print the contents
+            print(content)
     except OSError as e:
         print("Error reading README.md:", e)
-        return ""
-
-
-while True:
-    readme_content = read_readme_to_string()
-    print(readme_content)
-    ugit.ota_mqtt_check(readme_content)
+    ugit.ota_mqtt_check(content)
     time.sleep(2)
     
     
-
-
-
-    
-
-
-
-
-
-
