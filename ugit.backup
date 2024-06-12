@@ -19,11 +19,14 @@ from machine import Pin,I2C
 
 # Add the 'libs' directory to the module search path
 sys.path.append('/Library')
-from ssd1306 import SSD1306_I2C
+try:
+    from ssd1306 import SSD1306_I2C
+    i2c_dev = I2C(0,scl=Pin(17),sda=Pin(16),freq=200000)  # start I2C on I2C1 (GPIO 26/27)
+    oled = SSD1306_I2C(128, 64, i2c_dev) # oled controller
+except Exception as e:
+    print("Error in print_message:", e)
 
-i2c_dev = I2C(0,scl=Pin(17),sda=Pin(16),freq=200000)  # start I2C on I2C1 (GPIO 26/27)
-oled = SSD1306_I2C(128, 64, i2c_dev) # oled controller
-global internal_tree, client
+global internal_tree
 
 #### -------------User Variables----------------####
 #### 
@@ -52,9 +55,12 @@ call_trees_url = f'https://api.github.com/repos/{user}/{repository}/git/trees/{d
 raw = f'https://raw.githubusercontent.com/{user}/{repository}/master/'
 
 def display_message(msg):
-    oled.fill(0)
-    oled.text(msg, 15, 12, 1)
-    oled.show()
+    try:
+        oled.fill(0)
+        oled.text(msg, 15, 12, 1)
+        oled.show()
+    except Exception as e:
+        print("Error in print_message:", e)
 
 def pull(f_path,raw_url):
   print(f'pulling {f_path} from github')
@@ -254,4 +260,5 @@ def backup():
     backup = open('ugit.backup','w')
     backup.write(backup_text)
     backup.close()
+
 
