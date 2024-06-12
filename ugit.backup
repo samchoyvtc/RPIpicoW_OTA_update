@@ -145,7 +145,7 @@ def sub_cb(topic, msg):
     pull_all()
     
 
-def ota_mqtt_check(msg):
+def ota_mqtt_check(msg="OTA Ready"):
     global client
     client.check_msg()
     client.publish(topic_pub, msg)
