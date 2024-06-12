@@ -15,7 +15,7 @@ def hello_world():
         str_count = str(count)
         count += 1
         oled.fill(0)  # Fill the screen with black (0 means off)
-        oled.text('SSD1306 Test', 15, 12, 1)
+        oled.text('SSD1306', 15, 12, 1)
         oled.text(str_count, 15, 24, 1)
         oled.show()
         time.sleep(0.01)  # Wait for on_time seconds
