@@ -13,6 +13,7 @@ import binascii
 import machine
 import time
 import network
+import ubinascii
 
 import sys
 from machine import Pin,I2C
@@ -23,10 +24,20 @@ try:
     from ssd1306 import SSD1306_I2C
     i2c_dev = I2C(0,scl=Pin(17),sda=Pin(16),freq=200000)  # start I2C on I2C1 (GPIO 26/27)
     oled = SSD1306_I2C(128, 64, i2c_dev) # oled controller
+    from umqttsimple import MQTTClient
+    
 except Exception as e:
     print("Error in print_message:", e)
 
-global internal_tree
+#MQTT Info
+mqtt_server = 'broker.emqx.io'
+mqtt_user = ''
+mqtt_pass = ''
+client_id = ubinascii.hexlify('mqttx_ee5003e0')
+topic_sub = b'OTA_notification'
+topic_pub = b'OTA_pub'
+
+global internal_tree, client
 
 #### -------------User Variables----------------####
 #### 
@@ -126,7 +137,28 @@ def pull_all(tree=call_trees_url,raw = raw,ignore = ignore,isconnected=False):
   print('resetting machine in 10: machine.reset()')
   machine.reset()
   #return check instead return with global
+
+def sub_cb(topic, msg):
+  print((topic, msg))
+  if topic == b'OTA_notification' and msg == b'OTA_UPDATE':
+    print('MESSAGE Received')
+    pull_all()
     
+
+def ota_mqtt_check():
+    global client
+    client.check_msg()
+    client.publish(topic_pub, "OTA Alive")
+
+def ota_mqtt_connect_and_subscribe():
+    global client, client_id, mqtt_server, topic_sub
+    wificonnect()
+    client = MQTTClient(client_id, mqtt_server, user=mqtt_user, password=mqtt_pass)
+    client.set_callback(sub_cb)
+    client.connect()
+    client.subscribe(topic_sub)
+    
+
 def wificonnect(ssid=ssid,password=password):
     print('Use: like ugit.wificonnect(SSID,Password)')
     print('otherwise uses ssid,password in top of ugit.py code')
