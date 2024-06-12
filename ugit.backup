@@ -13,7 +13,6 @@ import binascii
 import machine
 import time
 import network
-import ubinascii
 
 import sys
 from machine import Pin,I2C
@@ -21,19 +20,9 @@ from machine import Pin,I2C
 # Add the 'libs' directory to the module search path
 sys.path.append('/Library')
 from ssd1306 import SSD1306_I2C
-from umqttsimple import MQTTClient
 
 i2c_dev = I2C(0,scl=Pin(17),sda=Pin(16),freq=200000)  # start I2C on I2C1 (GPIO 26/27)
 oled = SSD1306_I2C(128, 64, i2c_dev) # oled controller
-
-#mqtt broker setup
-mqtt_server = 'broker.emqx.io'
-mqtt_user = ''
-mqtt_pass = ''
-client_id = ubinascii.hexlify('mqttx_ee5003e0')
-topic_sub = b'OTA_notification'
-topic_pub = b'OTA_pub'
-
 global internal_tree, client
 
 #### -------------User Variables----------------####
@@ -131,27 +120,6 @@ def pull_all(tree=call_trees_url,raw = raw,ignore = ignore,isconnected=False):
   print('resetting machine in 10: machine.reset()')
   machine.reset()
   #return check instead return with global
-
-def sub_cb(topic, msg):
-  if topic == b'OTA_notification' and msg == b'OTA_UPDATE':
-    pull_all()
-
-def mqttconnect():
-    global client, client_id, mqtt_server, topic_sub
-    client = MQTTClient(client_id, mqtt_server, user=mqtt_user, password=mqtt_pass)
-    client.set_callback(sub_cb)
-    client.connect()
-    client.subscribe(topic_sub)
-    return client
-
-def MQTT_ugit():
-    global client
-    try:
-        client.check_msg()
-        client.publish(topic_pub, "OK")
-    except OSError as e:
-        machine.reset()
-    time.sleep(2)
     
 def wificonnect(ssid=ssid,password=password):
     print('Use: like ugit.wificonnect(SSID,Password)')
@@ -166,10 +134,6 @@ def wificonnect(ssid=ssid,password=password):
     print(f'SSID: {ssid}')
     print('Local Ip Address, Subnet Mask, Default Gateway, Listening on...')
     print(wlan.ifconfig())
-    try:
-      mqttconnect()
-    except OSError as e:
-      machine.reset()
     return wlan
   
 def build_internal_tree():
