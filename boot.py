@@ -2,7 +2,7 @@
 import ugit
 from machine import Pin
 import time
-import oled_display
+
 
 def flash_led(pin, flashes):
     for _ in range(flashes):
@@ -22,6 +22,4 @@ if input_pin.value() == 0:
     # Flash the LED 5 times
     flash_led(led_pin, 5)
     ugit.pull_all()
-else:
-    oled_display.hello_world()
 

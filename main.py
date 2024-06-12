@@ -20,7 +20,7 @@ def hello_world():
         oled.show()
         time.sleep(0.01)  # Wait for on_time seconds
 
+
     
-    
-    
+hello_world()   
     
