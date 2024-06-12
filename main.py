@@ -34,7 +34,7 @@ def connect_and_subscribe():
   print('Connected to %s MQTT broker, subscribed to %s topic' % (mqtt_server, topic_sub))
   return client
 
-
+ugit.wificonnect()
 try:
   client = connect_and_subscribe()
 except OSError as e:
